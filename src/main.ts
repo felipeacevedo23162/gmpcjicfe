@@ -3,6 +3,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router } from '@angular/router';
 import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
 import { routes } from './app/app.routes';
 import { HeaderComponent } from './app/components/header/header.component';
 import { AuthService } from './app/services/auth.service';
@@ -39,6 +40,7 @@ export class App {
 
 bootstrapApplication(App, {
   providers: [
-    provideRouter(routes)
+    provideRouter(routes),
+    provideHttpClient()
   ]
 }).catch(err => console.error(err));

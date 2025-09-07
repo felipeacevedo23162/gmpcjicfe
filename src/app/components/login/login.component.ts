@@ -23,30 +23,30 @@ import { AuthService } from '../../services/auth.service';
 
                 <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
                   <div class="mb-3">
-                    <label for="username" class="form-label">Usuario</label>
+                    <label for="documento" class="form-label">Documento</label>
                     <div class="input-group">
-                      <span class="input-group-text"><i class="fas fa-user"></i></span>
+                      <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                       <input 
                         type="text" 
                         class="form-control" 
-                        id="username"
-                        [(ngModel)]="credentials.username"
-                        name="username"
+                        id="documento"
+                        [(ngModel)]="credentials.documento"
+                        name="documento"
                         required
-                        placeholder="Ingrese su usuario">
+                        placeholder="Ingrese su documento">
                     </div>
                   </div>
 
                   <div class="mb-3">
-                    <label for="password" class="form-label">Contraseña</label>
+                    <label for="contrasena" class="form-label">Contraseña</label>
                     <div class="input-group">
                       <span class="input-group-text"><i class="fas fa-lock"></i></span>
                       <input 
                         type="password" 
                         class="form-control" 
-                        id="password"
-                        [(ngModel)]="credentials.password"
-                        name="password"
+                        id="contrasena"
+                        [(ngModel)]="credentials.contrasena"
+                        name="contrasena"
                         required
                         placeholder="Ingrese su contraseña">
                     </div>
@@ -68,16 +68,6 @@ import { AuthService } from '../../services/auth.service';
                   </div>
                 </form>
 
-                <div class="card bg-light mt-4">
-                  <div class="card-body p-3">
-                    <small class="text-muted">
-                      <strong>Usuarios de prueba:</strong><br>
-                      • admin / 123456<br>
-                      • doctor1 / 123456<br>
-                      • recepcion / 123456
-                    </small>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -88,8 +78,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent {
   credentials = {
-    username: '',
-    password: ''
+    documento: '',
+    contrasena: ''
   };
   isLoading = false;
   errorMessage = '';
@@ -100,18 +90,18 @@ export class LoginComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.authService.login(this.credentials.username, this.credentials.password).subscribe({
+    this.authService.login(this.credentials.documento, this.credentials.contrasena).subscribe({
       next: (success) => {
         this.isLoading = false;
         if (success) {
-          this.router.navigate(['/appointments']);
+          this.router.navigate(['/dashboard']);
         } else {
-          this.errorMessage = 'Usuario o contraseña incorrectos';
+          this.errorMessage = 'Documento o contraseña incorrectos';
         }
       },
       error: () => {
         this.isLoading = false;
-        this.errorMessage = 'Error al iniciar sesión. Intente nuevamente.';
+        this.errorMessage = 'Error al conectar con el servidor. Verifique que la API esté funcionando.';
       }
     });
   }

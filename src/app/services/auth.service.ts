@@ -28,7 +28,7 @@ interface LoginResponse {
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
-  private apiUrl = 'http://localhost:3003';
+  private apiUrl = '/api';
 
   constructor(private http: HttpClient) {
     // Check if user is already logged in

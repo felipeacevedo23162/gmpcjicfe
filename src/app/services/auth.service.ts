@@ -42,7 +42,11 @@ export class AuthService {
   login(documento: string, contrasena: string): Observable<boolean> {
     const loginData: LoginRequest = { documento, contrasena };
     
-    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, loginData)
+    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, loginData, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
       .pipe(
         map(response => {
           if (response.token && response.user) {

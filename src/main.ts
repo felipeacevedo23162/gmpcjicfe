@@ -3,10 +3,12 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router } from '@angular/router';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { routes } from './app/app.routes';
 import { HeaderComponent } from './app/components/header/header.component';
 import { AuthService } from './app/services/auth.service';
+import { AuthInterceptor } from './app/interceptors/auth.interceptor';
 
 @Component({
   selector: 'app-root',
@@ -41,6 +43,11 @@ export class App {
 bootstrapApplication(App, {
   providers: [
     provideRouter(routes),
-    provideHttpClient()
+    provideHttpClient(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ]
 }).catch(err => console.error(err));

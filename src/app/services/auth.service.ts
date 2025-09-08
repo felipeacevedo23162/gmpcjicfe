@@ -28,7 +28,7 @@ interface LoginResponse {
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
-  private apiUrl = '/api';
+  private apiUrl = 'http://localhost:3003';
 
   constructor(private http: HttpClient) {
     // Check if user is already logged in
@@ -42,11 +42,7 @@ export class AuthService {
   login(documento: string, contrasena: string): Observable<boolean> {
     const loginData: LoginRequest = { documento, contrasena };
     
-    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, loginData, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, loginData)
       .pipe(
         map(response => {
           if (response.token && response.user) {
